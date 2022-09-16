@@ -1,0 +1,112 @@
+from __future__ import print_function
+
+import os.path
+
+from google.oauth2 import service_account
+from googleapiclient import discovery
+
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive',
+          'https://www.googleapis.com/auth/drive.file']
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials.json')
+
+credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+
+
+SAMPLE_SPREADSHEET_ID = '1qiWzy1pj8g2i0f-klSqWXh66QbuBJBnBQVviZiknWMI'
+
+service = discovery.build('sheets', 'v4', credentials=credentials).spreadsheets().values()
+
+
+async def set_current_range_expenses(date_mes):
+    current_month = date_mes.strftime('%B')
+    result = f'{current_month}!A7:L1000'
+    return result
+
+
+async def set_current_range_profit(date_mes):
+    current_month = date_mes.strftime('%B')
+    result = f'{current_month}!A7:D1000'
+    return result
+
+
+async def add_new_row(range, array):
+    result = service.append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                            range=range,
+                            valueInputOption='USER_ENTERED',
+                            insertDataOption='INSERT_ROWS',
+                            body=array).execute()
+
+
+async def get_data_for_cur_month(date_mes):
+    current_month = date_mes.strftime('%B')
+    result = service.get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                         range=current_month).execute()
+
+    result_text = f'\nЗагальний баланс:   <b>{result["values"][0][2]}</b>\n' \
+                  f"Дохід:  {result['values'][1][2]}\n" \
+                  f"Витрати всього:  {result['values'][2][2]}\n\n" \
+                  f"Розподіл витрат по категоріям:\n" \
+                  f"Продукти харчування:  {result['values'][3][4]}\n" \
+                  f"Комунальні витрати:  {result['values'][3][5]}\n" \
+                  f"Відпочинок:  {result['values'][3][6]}\n" \
+                  f"Витрати на миючі засоби:  {result['values'][3][7]}\n" \
+                  f"Витрати на автомобіль:  {result['values'][3][8]}\n" \
+                  f"Витрати на село:  {result['values'][3][9]}\n" \
+                  f"Погашення кредиту:  {result['values'][3][10]}\n" \
+                  f"Інші витрати:  {result['values'][3][11]}\n"
+    return result_text
+
+
+async def get_data_for_month(month):
+    result = service.get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                         range=month).execute()
+    if int(result['values'][0][2]) or int(result['values'][2][2]) != 0:
+        result_text = f"\nЗагальний баланс:   <b>{result['values'][0][2]}</b>\n" \
+                      f"Дохід:  {result['values'][1][2]}\n" \
+                      f"Витрати всього:  {result['values'][2][2]}\n\n" \
+                      f"Розподіл витрат по категоріям:\n" \
+                      f"Продукти харчування:  {result['values'][3][4]}\n" \
+                      f"Комунальні витрати:  {result['values'][3][5]}\n" \
+                      f"Відпочинок:  {result['values'][3][6]}\n" \
+                      f"Витрати на миючі засоби:  {result['values'][3][7]}\n" \
+                      f"Витрати на автомобіль:  {result['values'][3][8]}\n" \
+                      f"Витрати на село:  {result['values'][3][9]}\n" \
+                      f"Погашення кредиту:  {result['values'][3][10]}\n" \
+                      f"Інші витрати:  {result['values'][3][11]}\n"
+        return result_text
+    return 'Інформація відсутня'
+
+
+async def get_data_for_year(year):
+    result = service.get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                         range=year).execute()
+    result_text = f"\nЗагальний баланс:   <b>{result['values'][0][1]}</b>\n" \
+                  f"Дохід:  {result['values'][1][1]}\n" \
+                  f"Витрати всього:  {result['values'][2][1]}\n\n" \
+                  f"Розподіл витрат по категоріям:\n" \
+                  f"Продукти харчування:  {result['values'][19][1]}\n" \
+                  f"Комунальні витрати:  {result['values'][19][2]}\n" \
+                  f"Відпочинок:  {result['values'][19][3]}\n" \
+                  f"Витрати на миючі засоби:  {result['values'][19][4]}\n" \
+                  f"Витрати на автомобіль:  {result['values'][19][5]}\n" \
+                  f"Витрати на село:  {result['values'][19][6]}\n" \
+                  f"Погашення кредиту:  {result['values'][19][7]}\n" \
+                  f"Інші витрати:  {result['values'][19][8]}\n"
+    return result_text
+
+
+
+
+# response = service.update(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+#                          range=range_,
+#                          valueInputOption='USER_ENTERED',
+#                          body=array).execute()
+
+# Call the Sheets API
+# result = service.get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME).execute()
+# # data_from_sheet = result.get('values', [])
+#  new = service.get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range='09!C1').execute()
+# print(new.values())
