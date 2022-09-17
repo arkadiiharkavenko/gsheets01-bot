@@ -2,22 +2,11 @@ from __future__ import print_function
 
 import os.path
 
-from google.oauth2 import service_account
 from googleapiclient import discovery
+from bot_app import config
 
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive',
-          'https://www.googleapis.com/auth/drive.file']
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials.json')
-
-credentials = service_account.Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-
-
-SAMPLE_SPREADSHEET_ID = '1qiWzy1pj8g2i0f-klSqWXh66QbuBJBnBQVviZiknWMI'
-
-service = discovery.build('sheets', 'v4', credentials=credentials).spreadsheets().values()
+SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
+service = discovery.build('sheets', 'v4', credentials=config.credentials).spreadsheets().values()
 
 
 async def set_current_range_expenses(date_mes):
@@ -33,35 +22,15 @@ async def set_current_range_profit(date_mes):
 
 
 async def add_new_row(range, array):
-    result = service.append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+    result = service.append(spreadsheetId=SPREADSHEET_ID,
                             range=range,
                             valueInputOption='USER_ENTERED',
                             insertDataOption='INSERT_ROWS',
                             body=array).execute()
 
 
-async def get_data_for_cur_month(date_mes):
-    current_month = date_mes.strftime('%B')
-    result = service.get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                         range=current_month).execute()
-
-    result_text = f'\nЗагальний баланс:   <b>{result["values"][0][2]}</b>\n' \
-                  f"Дохід:  {result['values'][1][2]}\n" \
-                  f"Витрати всього:  {result['values'][2][2]}\n\n" \
-                  f"Розподіл витрат по категоріям:\n" \
-                  f"Продукти харчування:  {result['values'][3][4]}\n" \
-                  f"Комунальні витрати:  {result['values'][3][5]}\n" \
-                  f"Відпочинок:  {result['values'][3][6]}\n" \
-                  f"Витрати на миючі засоби:  {result['values'][3][7]}\n" \
-                  f"Витрати на автомобіль:  {result['values'][3][8]}\n" \
-                  f"Витрати на село:  {result['values'][3][9]}\n" \
-                  f"Погашення кредиту:  {result['values'][3][10]}\n" \
-                  f"Інші витрати:  {result['values'][3][11]}\n"
-    return result_text
-
-
 async def get_data_for_month(month):
-    result = service.get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+    result = service.get(spreadsheetId=SPREADSHEET_ID,
                          range=month).execute()
     if int(result['values'][0][2]) or int(result['values'][2][2]) != 0:
         result_text = f"\nЗагальний баланс:   <b>{result['values'][0][2]}</b>\n" \
@@ -81,7 +50,7 @@ async def get_data_for_month(month):
 
 
 async def get_data_for_year(year):
-    result = service.get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+    result = service.get(spreadsheetId=SPREADSHEET_ID,
                          range=year).execute()
     result_text = f"\nЗагальний баланс:   <b>{result['values'][0][1]}</b>\n" \
                   f"Дохід:  {result['values'][1][1]}\n" \
