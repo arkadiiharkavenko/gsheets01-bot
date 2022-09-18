@@ -10,18 +10,36 @@ service = discovery.build('sheets', 'v4', credentials=config.credentials).spread
 
 
 async def set_current_range_expenses(date_mes):
+    """
+    Установка области внесения данных по расходам в таблицу в формате: название_листа!диапазон
+
+    :param date_mes: дата (str)
+    :return: srt
+    """
     current_month = date_mes.strftime('%B')
     result = f'{current_month}!A7:L1000'
     return result
 
 
 async def set_current_range_profit(date_mes):
+    """
+    Установка области внесения данных по доходам в таблицу в формате: название_листа!диапазон
+
+    :param date_mes: дата (str)
+    :return: srt
+    """
     current_month = date_mes.strftime('%B')
     result = f'{current_month}!A7:D1000'
     return result
 
 
 async def add_new_row(range, array):
+    """
+    Добавление новой строки в таблицу
+    :param range: область внесения данных (str)
+    :param array: значения (dict)
+    :return: None
+    """
     result = service.append(spreadsheetId=SPREADSHEET_ID,
                             range=range,
                             valueInputOption='USER_ENTERED',
@@ -30,6 +48,11 @@ async def add_new_row(range, array):
 
 
 async def get_data_for_month(month):
+    """
+    Получение данных их таблицы по году
+    :param month: название листа (str)
+    :return: str
+    """
     result = service.get(spreadsheetId=SPREADSHEET_ID,
                          range=month).execute()
     if int(result['values'][0][2]) or int(result['values'][2][2]) != 0:
@@ -50,6 +73,11 @@ async def get_data_for_month(month):
 
 
 async def get_data_for_year(year):
+    """
+    Получение данных их таблицы по месяцу
+    :param year: str
+    :return: str
+    """
     result = service.get(spreadsheetId=SPREADSHEET_ID,
                          range=year).execute()
     result_text = f"\nЗагальний баланс:   <b>{result['values'][0][1]}</b>\n" \
