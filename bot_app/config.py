@@ -25,5 +25,18 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapi
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials.json')
 
+
 credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+
+
+category_names = {
+    'products': 'Продукти',
+    'services': 'Комуналка',
+    'relax': 'Відпочинок',
+    'cleaning': 'Засоби миття та гігієни',
+    'car': 'Витрати на авто',
+    'village': 'Витрати на село',
+    'credit': 'Погашення кредиту',
+    'other': 'Інше'
+}
