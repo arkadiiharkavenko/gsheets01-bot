@@ -36,6 +36,7 @@ async def set_current_range_profit(date_mes):
 async def add_new_row(range, array):
     """
     Добавление новой строки в таблицу
+
     :param range: область внесения данных (str)
     :param array: значения (dict)
     :return: None
@@ -50,6 +51,7 @@ async def add_new_row(range, array):
 async def get_data_for_month(month):
     """
     Получение данных их таблицы по году
+
     :param month: название листа (str)
     :return: str
     """
@@ -75,6 +77,7 @@ async def get_data_for_month(month):
 async def get_data_for_year(year):
     """
     Получение данных их таблицы по месяцу
+
     :param year: str
     :return: str
     """

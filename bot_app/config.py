@@ -22,9 +22,8 @@ REDIS = {
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive',
           'https://www.googleapis.com/auth/drive.file']
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials.json')
 
+SERVICE_ACCOUNT_FILE = os.path.join(os.path.dirname(__file__), '../', 'credentials.json')
 
 credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
@@ -39,4 +38,21 @@ category_names = {
     'village': 'Витрати на село',
     'credit': 'Погашення кредиту',
     'other': 'Інше'
+}
+
+mouth_names = {
+    'current': 'поточному місяці',
+    'January': 'січні',
+    'February': 'лютому',
+    'March': 'березні',
+    'April': 'квітні',
+    'May': 'травні',
+    'June': 'червні',
+    'July': 'липні',
+    'August': 'серпні',
+    'September': 'вересні',
+    'October': 'жовтні',
+    'November': 'листопаді',
+    'December': 'грудні',
+    '2022': '2022 році',
 }

@@ -1,4 +1,5 @@
 import aiogram
+from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message
 
 import bot_app.main
@@ -19,44 +20,15 @@ async def choice_statistic(message: Message):
                            reply_markup=change_month())
 
 
-@dp.callback_query_handler(aiogram.filters.IDFilter(user_id=config.ADMINS_ID),
-                           text=['current', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-                                 'September', 'October', 'November', 'December', '2022'])
+@dp.callback_query_handler(aiogram.filters.IDFilter(user_id=config.ADMINS_ID), text_startswith='mouth-')
 async def settings_menu(call: CallbackQuery):
     await call.answer()
-    date_mes = call.message.date
-    mouth = call.data
     await call.message.delete_reply_markup()
+    date_mes = call.message.date
+    mouth = call.data.split('-')[1]
+    text_for_user = config.mouth_names.get(mouth)
     if mouth == 'current':
-        text_for_user = 'поточному місяці'
         mouth = date_mes.strftime('%B')
-    elif mouth == 'January':
-        text_for_user = 'січні'
-    elif mouth == 'February':
-        text_for_user = 'лютому'
-    elif mouth == 'March':
-        text_for_user = 'березні'
-    elif mouth == 'April':
-        text_for_user = 'квітні'
-    elif mouth == 'May':
-        text_for_user = 'травні'
-    elif mouth == 'June':
-        text_for_user = 'червні'
-    elif mouth == 'July':
-        text_for_user = 'липні'
-    elif mouth == 'August':
-        text_for_user = 'серпні'
-    elif mouth == 'September':
-        text_for_user = 'вересні'
-    elif mouth == 'October':
-        text_for_user = 'жовтні'
-    elif mouth == 'November':
-        text_for_user = 'листопаді'
-    elif mouth == 'December':
-        text_for_user = 'грудні'
-    else:
-        text_for_user = '2022 році'
-
     if mouth == '2022':
         result = await bot_app.main.get_data_for_year('2022')
     else:

@@ -63,27 +63,28 @@ async def add_new_prod(message: Message, state: FSMContext):
     user_name = message.from_user.first_name
     date_mes = message.date
     state_status = await state.get_data()
+    categories = state_status['state'].split('-')[1]
     range_ = await bot_app.main.set_current_range_expenses(date_mes)
 
-    if state_status['state'] == 'products':
+    if categories == 'products':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
                        summa, None, None, None, None, None, None, None]
-    elif state_status['state'] == 'services':
+    elif categories == 'services':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
                        None, summa, None, None, None, None, None, None]
-    elif state_status['state'] == 'relax':
+    elif categories == 'relax':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
                        None, None, summa, None, None, None, None, None]
-    elif state_status['state'] == 'cleaning':
+    elif categories == 'cleaning':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
                        None, None, None, summa, None, None, None, None]
-    elif state_status['state'] == 'car':
+    elif categories == 'car':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
                        None, None, None, None, summa, None, None, None]
-    elif state_status['state'] == 'village':
+    elif categories == 'village':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
                        None, None, None, None, None, summa, None, None]
-    elif state_status['state'] == 'credit':
+    elif categories == 'credit':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
                        None, None, None, None, None, None, summa, None]
     else:
