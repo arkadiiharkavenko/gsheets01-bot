@@ -39,35 +39,16 @@ async def choice_expense(message: Message):
 
 
 @dp.callback_query_handler(aiogram.filters.IDFilter(user_id=config.ADMINS_ID),
-                           text=['products', 'services', 'relax', 'cleaning', 'car', 'village', 'credit', 'other'])
+                           text_startswith='category-')
 async def settings_menu(call: CallbackQuery, state: FSMContext):
+    """
+    Достаем имена расходов из словаря в конфиге, потом с базы данных такое будешь доставать, но пока так,
+    что бы можно было легко добавить новые не сильно меня код, так же колл бек если однотипный - можно сделать стартвиз
+    """
     await call.answer()
-    categories = call.data
     await AddNewExpense.add_new_row.set()
-    if categories == 'products':
-        text_for_user = 'Продукти'
-        await state.set_data({'state': 'products'})
-    elif categories == 'services':
-        text_for_user = 'Комуналка'
-        await state.set_data({'state': 'services'})
-    elif categories == 'relax':
-        text_for_user = 'Відпочинок'
-        await state.set_data({'state': 'relax'})
-    elif categories == 'cleaning':
-        text_for_user = 'Засоби миття та гігієни'
-        await state.set_data({'state': 'cleaning'})
-    elif categories == 'car':
-        text_for_user = 'Витрати на авто'
-        await state.set_data({'state': 'car'})
-    elif categories == 'village':
-        text_for_user = 'Витрати на село'
-        await state.set_data({'state': 'village'})
-    elif categories == 'credit':
-        text_for_user = 'Погашення кредиту'
-        await state.set_data({'state': 'credit'})
-    else:
-        text_for_user = 'Інше'
-        await state.set_data({'state': 'other'})
+    await state.set_data({'state': call.data})
+    text_for_user = config.category_names.get(call.data)
 
     await call.message.edit_text(text=f'Обрано категорію "{text_for_user}"\nВведіть суму витрат (без копійок):',
                                  reply_markup=cancellation())

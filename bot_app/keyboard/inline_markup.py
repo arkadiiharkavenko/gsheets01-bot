@@ -3,28 +3,28 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def expenses_button():
     inline_btn_1 = InlineKeyboardButton('🥪  Продукти',
-                                        callback_data='products')
+                                        callback_data='category-products')
 
     inline_btn_2 = InlineKeyboardButton('🏢 💡 🚰  Комуналка',
-                                        callback_data='services')
+                                        callback_data='category-services')
 
     inline_btn_3 = InlineKeyboardButton('🏝️  Відпочинок',
-                                        callback_data='relax')
+                                        callback_data='category-relax')
 
     inline_btn_4 = InlineKeyboardButton('🪥  🛁  Засоби миття та гігієни',
-                                        callback_data='cleaning')
+                                        callback_data='category-cleaning')
 
     inline_btn_5 = InlineKeyboardButton('🚗  Витрати на авто',
-                                        callback_data='car')
+                                        callback_data='category-car')
 
     inline_btn_6 = InlineKeyboardButton('🏡  Витрати на село',
-                                        callback_data='village')
+                                        callback_data='category-village')
 
     inline_btn_7 = InlineKeyboardButton('💳  Погашення кредиту',
-                                        callback_data='credit')
+                                        callback_data='category-credit')
 
     inline_btn_8 = InlineKeyboardButton('💅🏻 👨 ‍🦲 ♨️ 📚   Інше',
-                                        callback_data='other')
+                                        callback_data='category-other')
     #
     inline_btn_9 = InlineKeyboardButton('Відміна', callback_data='cancellation')
 
