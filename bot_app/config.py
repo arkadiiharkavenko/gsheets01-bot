@@ -9,7 +9,7 @@ cwd = Path().cwd()
 load_dotenv()
 import os
 
-
+'f'
 ADMINS_ID = json.loads(os.getenv('ADMINS_ID'))
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 
