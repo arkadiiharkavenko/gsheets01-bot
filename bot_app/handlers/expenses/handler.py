@@ -48,7 +48,7 @@ async def settings_menu(call: CallbackQuery, state: FSMContext):
     await call.answer()
     await AddNewExpense.add_new_row.set()
     await state.set_data({'state': call.data})
-    text_for_user = config.category_names.get(call.data)
+    text_for_user = config.category_names.get(call.data.split('-')[1])
 
     await call.message.edit_text(text=f'Обрано категорію "{text_for_user}"\nВведіть суму витрат (без копійок):',
                                  reply_markup=cancellation())
@@ -68,25 +68,25 @@ async def add_new_prod(message: Message, state: FSMContext):
 
     if categories == 'products':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
-                       summa, None, None, None, None, None, None, None]
+                       summa]
     elif categories == 'services':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
-                       None, summa, None, None, None, None, None, None]
+                       None, summa]
     elif categories == 'relax':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
-                       None, None, summa, None, None, None, None, None]
+                       None, None, summa]
     elif categories == 'cleaning':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
-                       None, None, None, summa, None, None, None, None]
+                       None, None, None, summa]
     elif categories == 'car':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
-                       None, None, None, None, summa, None, None, None]
+                       None, None, None, None, summa]
     elif categories == 'village':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
-                       None, None, None, None, None, summa, None, None]
+                       None, None, None, None, None, summa]
     elif categories == 'credit':
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
-                       None, None, None, None, None, None, summa, None]
+                       None, None, None, None, None, None, summa]
     else:
         values_data = [user_name, date_mes.date().day, date_mes.strftime('%H;%M'), None,
                        None, None, None, None, None, None, None, summa]
