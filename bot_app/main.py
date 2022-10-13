@@ -58,18 +58,20 @@ async def get_data_for_month(month):
     result = service.get(spreadsheetId=SPREADSHEET_ID,
                          range=month).execute()
     if int(result['values'][0][2]) or int(result['values'][2][2]) != 0:
-        result_text = f"\nЗагальний баланс:   <b>{result['values'][0][2]}</b>\n" \
-                      f"Дохід:  {result['values'][1][2]}\n" \
-                      f"Витрати всього:  {result['values'][2][2]}\n\n" \
-                      f"Розподіл витрат по категоріям:\n" \
-                      f"Продукти харчування:  {result['values'][3][4]}\n" \
-                      f"Комунальні витрати:  {result['values'][3][5]}\n" \
-                      f"Відпочинок:  {result['values'][3][6]}\n" \
-                      f"Витрати на миючі засоби:  {result['values'][3][7]}\n" \
-                      f"Витрати на автомобіль:  {result['values'][3][8]}\n" \
-                      f"Витрати на село:  {result['values'][3][9]}\n" \
-                      f"Погашення кредиту:  {result['values'][3][10]}\n" \
-                      f"Інші витрати:  {result['values'][3][11]}\n"
+        result_text = f"\n{'Загальний баланс:':45}<b>{result['values'][0][2]}</b>\n" \
+                      f"----------\n" \
+                      f"{'Дохід:':57}{result['values'][1][2]}\n" \
+                      f"----------\n" \
+                      f"{'Витрати всього:':48}{result['values'][2][2]}\n\n" \
+                      f"Розподіл витрат:\n\n" \
+                      f"{'Продукти харчування:':41}{result['values'][3][4]}\n" \
+                      f"{'Комунальні витрати:':43}{result['values'][3][5]}\n" \
+                      f"{'Відпочинок:':51}{result['values'][3][6]}\n" \
+                      f"{'Витрати на миючі засоби:':39}{result['values'][3][7]}\n" \
+                      f"{'Витрати на автомобіль:':41}{result['values'][3][8]}\n" \
+                      f"{'Витрати на село:':48}{result['values'][3][9]}\n" \
+                      f"{'Погашення кредиту:':43}{result['values'][3][10]}\n" \
+                      f"{'Інші витрати:':51}{result['values'][3][11]}\n"
         return result_text
     return 'Інформація відсутня'
 
@@ -83,18 +85,18 @@ async def get_data_for_year(year):
     """
     result = service.get(spreadsheetId=SPREADSHEET_ID,
                          range=year).execute()
-    result_text = f"\nЗагальний баланс:   <b>{result['values'][0][1]}</b>\n" \
-                  f"Дохід:  {result['values'][1][1]}\n" \
-                  f"Витрати всього:  {result['values'][2][1]}\n\n" \
+    result_text = f"\n{'Загальний баланс:':45}<b>{result['values'][0][1]}</b>\n" \
+                  f"{'Дохід:':57}{result['values'][1][1]}\n" \
+                  f"{'Витрати всього:':48}{result['values'][2][1]}\n\n" \
                   f"Розподіл витрат по категоріям:\n" \
-                  f"Продукти харчування:  {result['values'][19][1]}\n" \
-                  f"Комунальні витрати:  {result['values'][19][2]}\n" \
-                  f"Відпочинок:  {result['values'][19][3]}\n" \
-                  f"Витрати на миючі засоби:  {result['values'][19][4]}\n" \
-                  f"Витрати на автомобіль:  {result['values'][19][5]}\n" \
-                  f"Витрати на село:  {result['values'][19][6]}\n" \
-                  f"Погашення кредиту:  {result['values'][19][7]}\n" \
-                  f"Інші витрати:  {result['values'][19][8]}\n"
+                  f"{'Продукти харчування:':41}{result['values'][19][1]}\n" \
+                  f"{'Комунальні витрати:':43}{result['values'][19][2]}\n" \
+                  f"{'Відпочинок:':51}{result['values'][19][3]}\n" \
+                  f"{'Витрати на миючі засоби:':39}{result['values'][19][4]}\n" \
+                  f"{'Витрати на автомобіль:':41}{result['values'][19][5]}\n" \
+                  f"{'Витрати на село:':48}{result['values'][19][6]}\n" \
+                  f"{'Погашення кредиту:':43}{result['values'][19][7]}\n" \
+                  f"{'Інші витрати:':51}{result['values'][19][8]}\n"
     return result_text
 
 

@@ -25,19 +25,16 @@ def expenses_button():
 
     inline_btn_8 = InlineKeyboardButton('💅🏻 👨 ‍🦲 ♨️ 📚   Інше',
                                         callback_data='category-other')
-    #
-    inline_btn_9 = InlineKeyboardButton('Відміна', callback_data='cancellation')
-
     inline_kb_full = InlineKeyboardMarkup(row_width=1)
     inline_kb_full.add(inline_btn_1, inline_btn_2, inline_btn_3, inline_btn_4, inline_btn_5,
-                       inline_btn_6, inline_btn_7, inline_btn_8, inline_btn_9)
+                       inline_btn_6, inline_btn_7, inline_btn_8)
     return inline_kb_full
 
-
-def cancellation():
-    inline_kb_full = InlineKeyboardMarkup(row_width=1)
-    inline_kb_full.add(InlineKeyboardButton(text='Відміна', callback_data=f'cancellation'))
-    return inline_kb_full
+#
+# def cancellation():
+#     inline_kb_full = InlineKeyboardMarkup(row_width=1)
+#     inline_kb_full.add(InlineKeyboardButton(text='Відміна', callback_data=f'cancellation'))
+#     return inline_kb_full
 
 
 def back_action():
@@ -49,8 +46,7 @@ def back_action():
 def back_and_cancel():
     inline_kb_full = InlineKeyboardMarkup(row_width=2)
     inline_btn_1 = InlineKeyboardButton(text='⬅️  Назад', callback_data='back-to-choice')
-    inline_btn_2 = InlineKeyboardButton(text='Відміна', callback_data=f'cancellation')
-    inline_kb_full.add(inline_btn_1, inline_btn_2)
+    inline_kb_full.add(inline_btn_1)
     return inline_kb_full
 
 
@@ -70,7 +66,6 @@ def change_month():
     inline_btn_12 = InlineKeyboardButton('Листопад', callback_data='mouth-November')
     inline_btn_13 = InlineKeyboardButton('Грудень', callback_data='mouth-December')
     inline_btn_14 = InlineKeyboardButton('За рік', callback_data='mouth-2022')
-    inline_btn_16 = InlineKeyboardButton('Відміна', callback_data='cancellation')
     inline_btn_15 = InlineKeyboardButton('Відкрити таблицю з даними',
                                          url='https://docs.google.com/spreadsheets/d/1qiWzy1pj8g2i0f-'
                                              'klSqWXh66QbuBJBnBQVviZiknWMI/edit#gid=2070221350')
@@ -79,7 +74,6 @@ def change_month():
                        inline_btn_8, inline_btn_9, inline_btn_10, inline_btn_11, inline_btn_12, inline_btn_13)
     inline_kb_full.row(inline_btn_14)
     inline_kb_full.row(inline_btn_15)
-    inline_kb_full.row(inline_btn_16)
 
     return inline_kb_full
 

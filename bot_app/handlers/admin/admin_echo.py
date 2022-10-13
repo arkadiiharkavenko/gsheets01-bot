@@ -1,4 +1,5 @@
-import aiogram.types
+# import aiogram.types
+import aiogram
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
 
@@ -13,8 +14,10 @@ async def admin_echo(message: Message, state: FSMContext):
     await bot.send_message(chat_id=message.from_user.id,
                            text=f'Привіт {message.from_user.username}!\n'
                                 f'Я - бот-бюджетник) допомагаю контролювати '
-                                f'доходи та витрати для чого зберігаю всі передані мені дані',
+                                f'доходи та витрати для чого зберігаю всі передані мені дані у google-таблиці',
                            reply_markup=admin_echo_button())
+
+#
 
 
 
