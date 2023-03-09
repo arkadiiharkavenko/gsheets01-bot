@@ -65,7 +65,7 @@ def change_month():
     inline_btn_11 = InlineKeyboardButton('Жовтень', callback_data='mouth-October')
     inline_btn_12 = InlineKeyboardButton('Листопад', callback_data='mouth-November')
     inline_btn_13 = InlineKeyboardButton('Грудень', callback_data='mouth-December')
-    inline_btn_14 = InlineKeyboardButton('За рік', callback_data='mouth-2022')
+    inline_btn_14 = InlineKeyboardButton('За рік', callback_data='mouth-YEAR')
     inline_btn_15 = InlineKeyboardButton('Відкрити таблицю з даними',
                                          url='https://docs.google.com/spreadsheets/d/1qiWzy1pj8g2i0f-'
                                              'klSqWXh66QbuBJBnBQVviZiknWMI/edit#gid=2070221350')

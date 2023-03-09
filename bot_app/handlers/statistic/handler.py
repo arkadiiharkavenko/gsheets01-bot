@@ -39,8 +39,8 @@ async def settings_menu(call: CallbackQuery):
     text_for_user = config.mouth_names.get(mouth)
     if mouth == 'current':
         mouth = date_mes.strftime('%B')
-    if mouth == '2022':
-        result = await bot_app.main.get_data_for_year('2023')
+    if mouth == 'YEAR':
+        result = await bot_app.main.get_data_for_year('YEAR')
     else:
         result = await bot_app.main.get_data_for_month(mouth)
 
