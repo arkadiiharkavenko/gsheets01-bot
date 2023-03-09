@@ -40,7 +40,7 @@ async def settings_menu(call: CallbackQuery):
     if mouth == 'current':
         mouth = date_mes.strftime('%B')
     if mouth == '2022':
-        result = await bot_app.main.get_data_for_year('2022')
+        result = await bot_app.main.get_data_for_year('2023')
     else:
         result = await bot_app.main.get_data_for_month(mouth)
 
