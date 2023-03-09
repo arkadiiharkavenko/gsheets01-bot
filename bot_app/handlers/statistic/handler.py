@@ -44,7 +44,7 @@ async def settings_menu(call: CallbackQuery):
     else:
         result = await bot_app.main.get_data_for_month(mouth)
 
-    await call.message.edit_text(text=f'У {text_for_user} зароблено та витрачено:\n'
+    await call.message.edit_text(text=f'У <u>{text_for_user}</u> зароблено та витрачено :\n'
                                       f'{result}',
                                  reply_markup=back_and_cancel())
 
